@@ -75,13 +75,17 @@ def animate(i):
         x_ticks_labels.append(str(l))
     plt.xticks(np.arange(1, len(y) + 1, 1), x_ticks_labels) # xticks(x_ticks_pos, x_labels)
 
-    # Setting xticks colors and plotting (erased by cla() so current counter works):
+    # Setting xticks colors (erased by cla() so current counter works):
     global counter
     global counter2
 
     ax.get_xticklabels()[counter].set_color(palette["highlighted"])
     ax.get_xticklabels()[counter].set_fontsize(16)
 
+    # Adding a vertical line which symbolises what has been sorted and what's yet to be sorted
+    plt.axvline(x=15.5 - counter2, color=palette["highlighted"])
+
+    # Plotting
     plt.bar(x, recipe[i], color=colors)
 
     # Preparing next bar colors (global variable, first call of animate => preset):
@@ -109,20 +113,20 @@ ani = FuncAnimation(plt.gcf(), animate, frames=len(recipe), interval=500)
 
 
 # ~~~~~~~~~~~~~~ Saving the animation ~~~~~~~~~~~~~~~~
-# Comment if designing animation as it takes a while to make video
-# Shortcut on emacs: Ctrl-x Ctr-;
+# # Comment if designing animation as it takes a while to make video
+# # Shortcut on emacs: Ctrl-x Ctr-;
 
-# Set up formatting for the movie files
-# fps = speed of the animation in the video!!
-Writer = animation.writers['ffmpeg']
-writer = Writer(fps=3, metadata=dict(artist='Me'), bitrate=1800)
+# # Set up formatting for the movie files
+# # fps = speed of the animation in the video!!
+# Writer = animation.writers['ffmpeg']
+# writer = Writer(fps=3, metadata=dict(artist='Me'), bitrate=1800)
 
-# Does the saving...
-ani.save("bubble_sort_animation.mp4", writer=writer)
+# # Does the saving...
+# ani.save("bubble_sort_animation.mp4", writer=writer)
 
 
 # ~~~~~~~~~~~ Displaying animation result ~~~~~~~~~~~~
 # Comment if recording video as it can be rather annoying to have
 # a window popping up while we want to see only the video output
 
-# plt.show()
+plt.show()
