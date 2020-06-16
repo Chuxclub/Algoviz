@@ -47,10 +47,10 @@ ax = plt.gca() # Initializing Axes object (cf. difference btw axes and axis...)
 # ~~~~~~~~~~~~~ Setting up the axis style ~~~~~~~~~~~~~
 
 # Removing the spines as they aren't useful:
-ax.spines['left'].set_color('none')
-ax.spines['right'].set_color('none')
-ax.spines['bottom'].set_color('none')
-ax.spines['top'].set_color('none')
+ax.spines['left'].set_color('white')
+ax.spines['right'].set_color('white')
+ax.spines['bottom'].set_color('white')
+ax.spines['top'].set_color('white')
 
 # Removing the y ticks as they aren't useful either here:
 plt.tick_params(
@@ -65,6 +65,9 @@ labelleft=False)   # labels along the left edge are off
 
 def animate(i):
 
+    global counter
+    global counter2
+
     plt.cla() # Clearing the Axes object
 
     # One tick is associated to one bar, so that the bar with height 15
@@ -73,12 +76,9 @@ def animate(i):
     x_ticks_labels = []
     for l in recipe[i]:
         x_ticks_labels.append(str(l))
-    plt.xticks(np.arange(1, len(y) + 1, 1), x_ticks_labels) # xticks(x_ticks_pos, x_labels)
+        plt.xticks(np.arange(1, len(y) + 1, 1), x_ticks_labels) # xticks(x_ticks_pos, x_labels)
 
     # Setting xticks colors (erased by cla() so current counter works):
-    global counter
-    global counter2
-
     ax.get_xticklabels()[counter].set_color(palette["highlighted"])
     ax.get_xticklabels()[counter].set_fontsize(16)
 
@@ -102,12 +102,14 @@ def animate(i):
     if(counter2 > 14):
         counter2 = 0
 
+    if i == 0:
+        i += 1
 
 # ~~~~~~ Calling the animation making function ~~~~~~~
 # Loops over animate and rewinds according to frames kwarg below
 # Interval kwarg defines looping through the frames speed
 
-ani = FuncAnimation(plt.gcf(), animate, frames=len(recipe), interval=500)
+ani = FuncAnimation(plt.gcf(), animate, frames=len(recipe), repeat_delay=2000, interval=100)
 # fargs=(9, ) => if animate() has several arguments as animate(i, arr_len), arr_len = 9
 # ani = FuncAnimation(plt.gcf(), animate, frames=len(res), fargs=(9,), interval=500)
 
@@ -119,10 +121,11 @@ ani = FuncAnimation(plt.gcf(), animate, frames=len(recipe), interval=500)
 # # Set up formatting for the movie files
 # # fps = speed of the animation in the video!!
 # Writer = animation.writers['ffmpeg']
-# writer = Writer(fps=3, metadata=dict(artist='Me'), bitrate=1800)
+# writer = Writer(fps=3, metadata=dict(artist='Florian Legendre'), bitrate=-1)
 
 # # Does the saving...
 # ani.save("bubble_sort_animation.mp4", writer=writer)
+# ani.save("bubble_sort_animation.gif", writer='imagemagick', fps=15)
 
 
 # ~~~~~~~~~~~ Displaying animation result ~~~~~~~~~~~~
