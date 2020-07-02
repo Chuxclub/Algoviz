@@ -2,11 +2,7 @@
 
 import turtle
 
-screen = turtle.Screen()
-pen = turtle.Turtle()
-# pen.speed(1)
-
-def draw_btree(stop_index, branch_len):
+def draw_btree_aux(pen, stop_index, branch_len):
 
     if stop_index == 1 :
         pen.backward(branch_len)
@@ -20,7 +16,7 @@ def draw_btree(stop_index, branch_len):
 
         pen.left(45)
         pen.forward(branch_len)
-        draw_btree(stop_index-1, branch_len*0.7)
+        draw_btree_aux(pen, stop_index-1, branch_len*0.7)
 
         pen.penup()
         pen.goto(pos)
@@ -29,13 +25,30 @@ def draw_btree(stop_index, branch_len):
 
         pen.right(45)
         pen.forward(branch_len)
-        draw_btree(stop_index-1, branch_len*0.7)
+        draw_btree_aux(pen, stop_index-1, branch_len*0.7)
+        
 
-pen.left(90)
-pen.forward(150)
-draw_btree(6, 100)
+def draw_btree(stop_index, branch_len):
 
-pen.penup()
-pen.home()
+    turtle.TurtleScreen._RUNNING = True # Necessary for Tkinter recall... I don't know why???
+    screen = turtle.Screen()
+    pen = turtle.Turtle()
+    pen.shape("circle")
+    pen.shapesize(0.2, 0.2, 0.2)
+    # pen.speed(1)
+	
+    pen.left(90)
+    pen.forward(150)
+    draw_btree_aux(pen, stop_index, branch_len)
 
-turtle.mainloop() # To maintain the window open (why doesn't it do it by default?)
+    pen.penup()
+    pen.home()
+
+    screen.exitonclick()
+    
+    turtle.TurtleScreen._RUNNING = True
+	
+	
+	
+if __name__ == "__main__":
+    draw_btree(6, 100)
