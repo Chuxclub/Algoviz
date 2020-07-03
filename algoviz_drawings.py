@@ -21,14 +21,21 @@ def drawings_frame(window):
     control_buttons_frame.pack(fill ="x", side="bottom")
 
     # Buttons of the first frame
-    tree_button = tk.Button(main_buttons_frame, command= lambda:draw_btree(6, 100), text="Trees")
+    tree_button = tk.Button(main_buttons_frame,
+                             command= lambda window=window, drawing_func=draw_btree:
+                             drawing_frame(window, drawing_func, 100),
+                             text="Trees")
     tree_button.grid(row=0, column=0, sticky="ew")
 
-    blines_button = tk.Button(main_buttons_frame, command= lambda:draw_blines(4),
-                              text="Broken Lines")
+    blines_button = tk.Button(main_buttons_frame,
+                             command= lambda window=window, drawing_func=draw_blines:
+                             drawing_frame(window, drawing_func),
+                             text="Broken Lines")
     blines_button.grid(row=1, column=0, sticky="ew")
 
-    sierp_button = tk.Button(main_buttons_frame, command= lambda window=window:sierp_frame(window),
+    sierp_button = tk.Button(main_buttons_frame,
+                             command= lambda window=window, drawing_func=sierpinski:
+                             drawing_frame(window, drawing_func),
                              text="Sierpinski Triangles")
     sierp_button.grid(row = 2, column = 0, sticky = "ew")
 
@@ -47,11 +54,6 @@ def drawings_frame(window):
     exit_button = tk.Button(control_buttons_frame, command = lambda:sys.exit(), text="Exit")
     exit_button.place(relx = 0.78, y = 20, height=30, width=50)
 
-
-# def update_value(var, field):
-
-#     var.set(field.get())
-#     print(var.get())
 
 
 class InputEntry():
@@ -78,13 +80,18 @@ class InputEntry():
         return int(self.entry_var)
 
 
-def var_sierp(input_entry, i):
+def launch_drawing(input_entry, animation_func, i, *args):
 
     i = input_entry.get_value()
-    sierpinski(i)
+
+    if len(*args) != 0:
+        animation_func(i, *args)
+
+    else:
+        animation_func(i)
 
 
-def sierp_frame(window):
+def drawing_frame(window, drawing_func, *args):
 
     clean_slate(window)
 
@@ -100,8 +107,11 @@ def sierp_frame(window):
     # Generation button
     i = iteration_field.get_value()
     gen_button = tk.Button(generation_frame,
-                           command = lambda input_entry=iteration_field, i=i:
-                           var_sierp(input_entry, i),
+                           command = lambda
+                           input_entry=iteration_field, i=i,
+                           animation_func=drawing_func,
+                           others=args:
+                           launch_drawing(input_entry, animation_func, i, others),
                            text = "Generate!")
     gen_button.grid()
 

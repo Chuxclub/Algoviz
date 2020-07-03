@@ -4,6 +4,7 @@ import tkinter as tk
 import sys
 
 import algoviz_drawings as viz_dr
+import algoviz_sortings as viz_s
 from tools import *
 
 
@@ -19,7 +20,9 @@ def main_frame(window):
     control_buttons_frame.pack(fill ="x", side="bottom")
 
     # Buttons of the first frame
-    sort_button = tk.Button(main_buttons_frame, text="Sorting Algorithms")
+    sort_button = tk.Button(main_buttons_frame,
+                            command= lambda window=window: viz_s.sortings_frame(window),
+                            text="Sorting Algorithms")
     sort_button.grid(row=0, column=0, sticky="ew", padx = 10)
 
     drawings_button = tk.Button(main_buttons_frame,
@@ -27,21 +30,27 @@ def main_frame(window):
                                 text="Recursive Drawings")
     drawings_button.grid(row=0, column=1, sticky="ew")
 
-    others_button = tk.Button(main_buttons_frame, text="Others")
-    others_button.grid(row = 1, column = 0, sticky = "ew", padx = 10)
+    # others_button = tk.Button(main_buttons_frame, text="Others")
+    # others_button.grid(row = 1, column = 0, sticky = "ew", padx = 10)
 
-    enigmas_button = tk.Button(main_buttons_frame, text="Recursive Enigmas")
-    enigmas_button.grid(row = 1, column = 1, sticky="ew")
+    # enigmas_button = tk.Button(main_buttons_frame, text="Recursive Enigmas")
+    # enigmas_button.grid(row = 1, column = 1, sticky="ew")
 
     # Buttons of the second frame
-    docs_button = tk.Button(control_buttons_frame, text="Docs")
-    docs_button.place(relx= 0.14, y = 20, height=30, width=50)
+    docs_button =  tk.Button(control_buttons_frame,
+                              command= lambda link="https://github.com/Chuxclub": open_url(link),
+                              text="Git Repo")
+    docs_button.place(relx= 0.14, y = 20, height=30, width=70)
 
     exit_button = tk.Button(control_buttons_frame, command= lambda: sys.exit(), text="Exit")
     exit_button.place(relx = 0.48, x = -35, height=50, width = 100)
 
-    author_button = tk.Button(control_buttons_frame, text="Author")
-    author_button.place(relx = 0.78, y = 20, height=30, width=50)
+    author_button = tk.Button(control_buttons_frame,
+                              command= lambda
+                              link="http://autodilab.hopto.org/Content/Misc/qui_suis_je.html":
+                              open_url(link),
+                              text="Author")
+    author_button.place(relx = 0.78, y = 20, height=30, width=70)
 
 # sierpinski_button = tk.Button(window, command= lambda: sierpinski(1), text="Sierpinski")
 # sierpinski_button.place(relx=0.5, rely=0.5, anchor="center")

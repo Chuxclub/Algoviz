@@ -39,7 +39,7 @@ def draw_btree(stop_index, branch_len):
 	
     pen.left(90)
     pen.forward(150)
-    draw_btree_aux(pen, stop_index, branch_len)
+    draw_btree_aux(pen, stop_index, branch_len[0])
 
     pen.penup()
     pen.home()
@@ -51,4 +51,4 @@ def draw_btree(stop_index, branch_len):
 	
 	
 if __name__ == "__main__":
-    draw_btree(6, 100)
+    draw_btree(6, [100])
